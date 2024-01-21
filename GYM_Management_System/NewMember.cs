@@ -36,7 +36,8 @@ namespace GYM_Management_System
             string gymTime = comboBoxGymTime.Text;
             string address = txtAddress.Text;
             string membership = comboBoxMembership.Text;
-
+            try
+            {
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source = DESKTOP-2FC14BD;Initial Catalog = gym;Integrated Security=true";
             SqlCommand cmd = new SqlCommand();
@@ -47,6 +48,11 @@ namespace GYM_Management_System
             DataSet DS = new DataSet();
             DA.Fill(DS);
             MessageBox.Show("Data is saved.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnReset_Click(object sender, EventArgs e)
