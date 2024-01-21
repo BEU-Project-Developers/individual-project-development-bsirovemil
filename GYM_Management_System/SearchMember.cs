@@ -11,31 +11,41 @@ using System.Windows.Forms;
 
 namespace GYM_Management_System
 {
+    // Declaration of the SearchMember class, which is a partial class of Form
     public partial class SearchMember : Form
     {
+        // Constructor for the SearchMember class
         public SearchMember()
         {
+            // Initialize the components of the form
             InitializeComponent();
         }
 
+        // Event handler for the Search button click
         private void btnSearch_Click(object sender, EventArgs e)
         {
             try
             {
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source = DESKTOP-2FC14BD;Initial Catalog = gym;Integrated Security=true";
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandText = "select * from NewMember where MID = " + txtSearch.Text + "";
+                // Create a SqlConnection and SqlCommand for database operations
+                SqlConnection con = new SqlConnection();
+                con.ConnectionString = "Data Source=DESKTOP-2FC14BD;Initial Catalog=gym;Integrated Security=true";
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
 
-            SqlDataAdapter DA = new SqlDataAdapter(cmd);
-            DataSet DS = new DataSet();
-            DA.Fill(DS);
+                // SQL query to select all data from the NewMember table where MID matches the entered value
+                cmd.CommandText = "select * from NewMember where MID = " + txtSearch.Text + "";
 
-            dataGridView1.DataSource = DS.Tables[0];
+                // Use SqlDataAdapter to execute the command and fill the DataSet
+                SqlDataAdapter DA = new SqlDataAdapter(cmd);
+                DataSet DS = new DataSet();
+                DA.Fill(DS);
+
+                // Display the search results in the DataGridView
+                dataGridView1.DataSource = DS.Tables[0];
             }
             catch (Exception ex)
             {
+                // Display an error message if an exception occurs
                 MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
